@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('filieres', function (Blueprint $table) {
+        Schema::create('examens', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->foreignId('faculte_id')->constrained()
+            $table->foreignId('academicYear_id')->constrained()
                                         ->onUpdate('cascade')
                                         ->onDelete('cascade');
+            $table->string('type',2);
+            $table->string('session',12);
+            $table->date('date');
             $table->timestamps();
-
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filieres');
+        Schema::dropIfExists('examens');
     }
 };

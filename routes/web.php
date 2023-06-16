@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ExamenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,8 +99,8 @@ Route::controller(Setting::class)->group(function () {
 Route::controller(CourseController::class)->group(function () {
     Route::get('course/list', 'course')->middleware('auth')->name('course/list');
     Route::post('course/save', 'courseSave')->name('course/save'); // save record course
-    Route::get('course/edit/{id}', 'courseEdit')->name('course/edit'); // edit view course
-    Route::post('course/update', 'courseUpdate')->name('course/update'); // update record course
+    Route::post('course/edit', 'courseEdit')->name('course/edit'); // edit view course
+    // Route::post('course/update', 'courseUpdate')->name('course/update'); // update record course
     Route::post('course/delete', 'courseDelete')->name('course/delete'); // delete record course
 });
 
@@ -107,9 +108,21 @@ Route::controller(CourseController::class)->group(function () {
 Route::controller(FiliereController::class)->group(function () {
     Route::get('filiere/list', 'filiere')->middleware('auth')->name('filiere/list');
     Route::post('filiere/save', 'filiereSave')->name('filiere/save'); // save record filiere
+    Route::post('filiere/edit', 'filiereEdit')->name('filiere/edit'); // edit view filiere
+    Route::post('filiere/delete', 'filiereDelete')->name('filiere/delete'); // delete record filiere
     // Route::get('filiere/edit/{id}', 'filiereEdit')->name('filiere/edit'); // edit view filiere
     // Route::post('filiere/update', 'filiereUpdate')->name('filiere/update'); // update record filiere
-    Route::post('filiere/delete', 'filiereDelete')->name('filiere/delete'); // delete record filiere
+});
+
+// ------------------------ Examen -------------------------------//
+Route::controller(ExamenController::class)->group(function () {
+    Route::get('examen/list', 'examen')->middleware('auth')->name('examen/list');
+    Route::get('examen/add', 'examenAdd')->middleware('auth')->name('examen/add');
+    Route::post('examen/save', 'examenSave')->name('examen/save'); // save record examen
+    Route::get('examen/edit/{id}', 'examenEdit')->name('examen/edit'); // edit view examen
+    Route::post('examen/update', 'examenUpdate')->name('examen/update'); // update record examen
+    Route::post('examen/delete', 'examenDelete')->name('examen/delete'); // delete record examen
+    // Route::post('examen/edit', 'filiereEdit')->name('filiere/edit'); // edit view examen
 });
 
 // ------------------------ student -------------------------------//

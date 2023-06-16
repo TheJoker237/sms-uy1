@@ -81,7 +81,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($courseList as $key=>$list )
+                                        @foreach ($courseList as $key=>$course )
                                         <tr>
                                             <td>
                                                 <div class="form-check check-tables">
@@ -89,24 +89,25 @@
                                                 </div>
                                             </td>
                                             <td>CR{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
-                                            {{-- <td hidden class="avatar">{{ $list->upload }}</td> --}}
+                                            <td hidden class="id">{{ $course->id }}</td>
+                                            <td hidden class="filiere">{{ $course->filiere->title}}</td>
+                                            {{-- <td hidden class="avatar">{{ $course->upload }}</td> --}}
                                             {{-- <td>
                                                 <h2 class="table-avatar">
                                                     <a href="student-details.html"class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$list->upload) }}" alt="User Image">
+                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$course->upload) }}" alt="User Image">
                                                     </a>
-                                                    <a href="student-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
+                                                    <a href="student-details.html">{{ $course->first_name }} {{ $course->last_name }}</a>
                                                 </h2>
                                             </td> --}}
-                                            <td>{{ $list->code}}</td>
-                                            <td>{{ $list->title}}</td>
+                                            <td class="course-code">{{ $course->code}}</td>
+                                            <td class="course-title">{{ $course->title}}</td>
                                             {{-- <td>Soeng Soeng</td> --}}
-                                            {{-- <td>{{ $list->phone_number }}</td> --}}
+                                            {{-- <td>{{ $course->phone_number }}</td> --}}
                                             {{-- <td>110 Sen Sok Steet,PP</td> --}}
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('course/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <a href="#" class="btn btn-sm bg-danger-light course-edit">
                                                         <i class="feather-edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
@@ -125,25 +126,33 @@
                 <div class="col-sm-6">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('course/save') }}" method="POST" enctype="application/x-www-form-urlencoded">
+                            <form id="course-form" action="{{ route('course/save') }}" method="POST" enctype="application/x-www-form-urlencoded">
                                 @csrf
+                                <input type="hidden" class="form-control" name="id" value="" readonly>
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Course Create
+                                        <h5 class="form-title student-info">
+                                            <span class="course-info">
+                                                Course Create
+                                            </span>
                                             <span>
                                                 <a href="javascript:;"><i class="feather-more-vertical"></i></a>
                                             </span>
                                         </h5>
+                                        <div class="col-auto text-end float-end ms-auto download-grp course-add">
+                                            <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </div>
                                     </div>
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Faculty <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('faculty') is-invalid @enderror" name="filiere">
+                                            <label>Filiere <span class="login-danger">*</span></label>
+                                            <select class="filiere-field form-control @error('faculty') is-invalid @enderror" name="filiere">
                                                 <option selected disabled>Select Filiere</option>
                                                 @foreach($filiereList as $filiere)
                                                 <option value="{{$filiere->title}}">{{$filiere->title}}</option>
                                                 @endforeach
+                                                {{-- <input type="hidden" class="form-control" name="id" value="{{$filiere->id}}" readonly> --}}
                                             </select>
                                             @error('faculty')
                                                 <span class="invalid-feedback" role="alert">
@@ -155,7 +164,7 @@
                                     <div class="col-12 col-sm-3">
                                         <div class="form-group local-forms">
                                             <label>Code UE <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="code" placeholder="Enter Code UE" value="{{ old('code') }}">
+                                            <input type="text" class="code-field form-control @error('first_name') is-invalid @enderror" name="code" placeholder="Enter Code UE" value="">
                                             @error('first_name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -166,7 +175,7 @@
                                     <div class="col-12 col-sm-5">
                                         <div class="form-group local-forms">
                                             <label>Intitulé UE <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="title" placeholder="Enter Title Course" value="{{ old('title') }}">
+                                            <input type="text" class="title-field form-control @error('last_name') is-invalid @enderror" name="title" placeholder="Enter Title Course" value="">
                                             @error('last_name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

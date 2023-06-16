@@ -81,15 +81,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($FiliereList as $key=>$list )
-                                        <tr>
+                                        @foreach ($filiereList as $key=>$filiere )
+                                        <tr class="tr">
                                             <td>
                                                 <div class="form-check check-tables">
                                                     <input class="form-check-input" type="checkbox" value="something">
                                                 </div>
                                             </td>
                                             <td>FL{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
+                                            <td hidden class="id">{{ $filiere->id }}</td>
                                             {{-- <td hidden class="avatar">{{ $list->upload }}</td> --}}
                                             {{-- <td>
                                                 <h2 class="table-avatar">
@@ -99,14 +99,14 @@
                                                     <a href="student-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
                                                 </h2>
                                             </td> --}}
-                                            <td>{{ $list->faculty}}</td>
-                                            <td>{{ $list->title}}</td>
+                                            <td class="filiere-faculty">{{ $filiere->faculte->title}}</td>
+                                            <td class="filiere-title">{{ $filiere ? $filiere->title : ""}}</td>
                                             {{-- <td>Soeng Soeng</td> --}}
                                             {{-- <td>{{ $list->phone_number }}</td> --}}
                                             {{-- <td>110 Sen Sok Steet,PP</td> --}}
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('filiere/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <a href="#" class="btn btn-sm bg-danger-light filiere-edit">
                                                         <i class="feather-edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
@@ -125,24 +125,31 @@
                 <div class="col-sm-5">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('filiere/save') }}" method="POST" enctype="multipart/form-data">
+                            <form id="filiere-form" action="{{ route('filiere/save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" class="form-control" name="id" value="" readonly>
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Filiere add
+                                        <h5 class="form-title student-info">
+                                            <span class="filiere-info">
+                                                Filiere add
+                                            </span>
                                             <span>
                                                 <a href="javascript:;"><i class="feather-more-vertical"></i></a>
                                             </span>
                                         </h5>
+                                        <div class="col-auto text-end float-end ms-auto download-grp filiere-add">
+                                            <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group local-forms">
                                             <label>Faculty <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('faculty') is-invalid @enderror" name="faculty">
+                                            <select class="faculty-field form-control @error('faculty') is-invalid @enderror" name="faculty">
                                                 <option selected disabled>Select Faculty</option>
-                                                <option value="Faculty Of Sciences">Faculty Of Sciences</option>
-                                                <option value="Faculty of Letters">Faculty of Letters</option>
-                                                <option value="Others">Others</option>
+                                                @foreach($faculteList as $faculte)
+                                                <option value="{{$faculte->title}}">{{$faculte->title}}</option>
+                                                @endforeach
                                             </select>
                                             @error('faculty')
                                                 <span class="invalid-feedback" role="alert">
@@ -154,7 +161,7 @@
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group local-forms">
                                             <label>Title Filiere <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter Title Filiere" value="{{ old('title') }}">
+                                            <input type="text" class="filiere-field form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter Title Filiere" value="">
                                             @error('title')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

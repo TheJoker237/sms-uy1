@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Filiere;
@@ -12,8 +13,9 @@ class FiliereController extends Controller
     // index page setting
     public function Filiere()
     {
-        $FiliereList=Filiere::all();
-        return view('filiere.filiere', compact('FiliereList'));
+        $filiereList=Filiere::all();
+        $faculteList=Faculte::all();
+        return view('filiere.filiere', compact('filiereList','faculteList'));
     }
 
     /** academic save record */
@@ -23,15 +25,12 @@ class FiliereController extends Controller
             'title'    => 'required|string',
             'faculty'    => 'required|string',
         ]);
-        // dd($request);
-        
         DB::beginTransaction();
         try {
             if(!empty($request->title) && !empty($request->faculty)) {
                 $filiere = new Filiere();
                 $filiere->title= $request->title;
-                $filiere->faculty= $request->faculty;
-                // dd($Course->year);
+                $filiere->faculte_id = Faculte::where('title',$request->faculty)->first()->id;
                 $filiere->save();
                 Toastr::success('Has been add successfully :)','Success');
                 DB::commit();
@@ -44,18 +43,8 @@ class FiliereController extends Controller
         }
     }
 
-    /** view for academic year edit */
-    public function FiliereEdit($id)
+    public function FiliereEdit(Request $request)
     {
-        $FiliereList = Filiere::all();
-        $Filiere = Filiere::where('id',$id)->first();
-        return view('filiere.edit-filiere',compact('FiliereList','Filiere'));
-    }
-
-    /** update record */
-    public function FiliereUpdate(Request $request)
-    {
-        DB::beginTransaction();
         try {
             // dd($request);
 
@@ -63,7 +52,7 @@ class FiliereController extends Controller
            
                 $updateRecord = [
                     'title' => $request->title,
-                    'faculty' => $request->faculty,
+                    'faculte_id' => Faculte::where('title',$request->faculty)->first()->id,
                 ];
                 Filiere::where('id',$request->id)->update($updateRecord);
                 

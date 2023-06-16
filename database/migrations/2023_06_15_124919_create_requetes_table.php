@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('filieres', function (Blueprint $table) {
+        Schema::create('requetes', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->foreignId('faculte_id')->constrained()
-                                        ->onUpdate('cascade')
-                                        ->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filieres');
+        Schema::dropIfExists('requetes');
     }
 };

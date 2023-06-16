@@ -196,7 +196,8 @@
     <script src="{{ URL::to('assets/plugins/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/script.js') }}"></script>
-    @vite('resources/js/app.js')
+    {{-- <script src="{{ URL::to('js/app.js') }}"></script> --}}
+    <script src="{{ URL::to('js/custom.js') }}"></script>
     @yield('script')
 </body>
 </html>

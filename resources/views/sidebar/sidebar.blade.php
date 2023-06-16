@@ -85,6 +85,20 @@
                         <li><a class="{{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">Courses edit</a></li> --}}
                     </ul>
                 </li>
+
+                <li class="submenu  {{set_active(['teacher/add/page','teacher/list/page','teacher/edit'])}} {{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> Examens</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('examen/list') }}" class="{{set_active(['examen/list'])}}">Examen List</a></li>
+                        <li><a href="{{ route('examen/add') }}" class="{{set_active(['examen/add'])}}">Examen Add</a></li>
+                        {{-- <li><a href="teacher-details.html">Courses View</a></li>
+                        <li><a href="{{ route('teacher/add/page') }}" class="{{set_active(['teacher/add/page'])}}">Courses add</a></li>
+                        <li><a class="{{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">Courses edit</a></li> --}}
+                    </ul>
+                </li>
                 
                 <li class="submenu {{set_active(['department/add/page','department/edit/page'])}}">
                     <a href="#"><i class="fas fa-building"></i>

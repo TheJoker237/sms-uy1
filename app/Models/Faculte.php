@@ -7,22 +7,21 @@ use App\Models\Filiere;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Course extends Model
+class Faculte extends Model
 {
     use HasFactory;
+
     // protected $fillable = [
-    //     'code',
     //     'title',
     // ];
     protected $guarded = [];
 
-    public function filiere(){
-        return $this->belongsTo(Filiere::class);
+    public function filieres(){
+        return $this->hasMany(Filiere::class);
     }
 
-    public function examens(){
+    public function examens()
+    {
         return $this->belongsToMany(Examen::class);
     }
-
-    
 }

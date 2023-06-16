@@ -29,12 +29,13 @@ class CourseController extends Controller
         
         DB::beginTransaction();
         try {
-            if(!empty($request->code) && !empty($request->title)) {
-                $Course = new Course;
-                $Course->code= $request->code;
-                $Course->title= $request->title;
-                // dd($Course->year);
-                $Course->save();
+            if(!empty($request->code) && !empty($request->title) && !empty($request->filiere)) {
+                $course = new Course;
+                $course->code= $request->code;
+                $course->title= $request->title;
+                $course->filiere_id = Filiere::where('title',$request->filiere)->first()->id;
+                // dd($course);
+                $course->save();
                 Toastr::success('Has been add successfully :)','Success');
                 DB::commit();
             }
@@ -47,15 +48,15 @@ class CourseController extends Controller
     }
 
     /** view for academic year edit */
-    public function CourseEdit($id)
-    {
-        $courseList = Course::all();
-        $course = Course::where('id',$id)->first();
-        return view('course.edit-course',compact('courseList','course'));
-    }
+    // public function CourseEdit($id)
+    // {
+    //     $courseList = Course::all();
+    //     $course = Course::where('id',$id)->first();
+    //     return view('course.edit-course',compact('courseList','course'));
+    // }
 
-    /** update record */
-    public function CourseUpdate(Request $request)
+    /** Edit record */
+    public function CourseEdit(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -66,6 +67,8 @@ class CourseController extends Controller
             $updateRecord = [
                 'code' => $request->code,
                 'title' => $request->title,
+                'filiere_id' => Filiere::where('title',$request->filiere)->first()->id,
+
             ];
             Course::where('id',$request->id)->update($updateRecord);
             
