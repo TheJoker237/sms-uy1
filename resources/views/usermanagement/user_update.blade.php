@@ -8,7 +8,7 @@
                     <div class="col">
                         <h3 class="page-title">Edit User</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="time-table.html">Users</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('list/users') }}">Users</a></li>
                             <li class="breadcrumb-item active">Edit User</li>
                         </ul>
                     </div>
@@ -28,21 +28,33 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="name" value="{{ $users->name }}">
-                                            <input type="hidden" class="form-control" name="user_id" value="{{ $users->user_id }}">
+                                            <label>UserName <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="name" value="{{ $user->username }}">
+                                            <input type="hidden" class="form-control" name="user_id" value="{{ $user->id }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>First Name <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Last Name <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Email <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="email" value="{{ $users->email }}">
+                                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Phone Number <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="phone_number" value="{{ $users->phone_number }}">
+                                            <input type="text" class="form-control" name="phone_number" value="{{ $user->phone_number }}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
@@ -50,9 +62,9 @@
                                             <label>Status <span class="login-danger">*</span></label>
                                             <select class="form-control select" name="status">
                                                 <option disabled>Select Status</option>
-                                                <option value="Active" {{ $users->status == 'Active' ? 'selected' : '' }}>Active</option>
-                                                <option value="Disable" {{ $users->status == 'Disable' ? 'selected' : '' }}>Disable</option>
-                                                <option value="Inactive" {{ $users->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                                                <option value="Active" {{ $user->status == 'Active' ? 'selected' : '' }}>Active</option>
+                                                <option value="Disable" {{ $user->status == 'Disable' ? 'selected' : '' }}>Disable</option>
+                                                <option value="Inactive" {{ $user->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                                             </select>
                                         </div>
                                     </div>
@@ -61,11 +73,11 @@
                                             <label>Role Name <span class="login-danger">*</span></label>
                                             <select class="form-control select" name="role_name">
                                                 <option disabled>Select Role Name</option>
-                                                <option value="Admin" {{ $users->role_name == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                                <option value="Super Admin" {{ $users->role_name == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
-                                                <option value="Normal User" {{ $users->role_name == 'Normal User' ? 'selected' : '' }}>Normal User</option>
-                                                <option value="Teachers" {{ $users->role_name == 'Teachers' ? 'selected' : '' }}>Teachers</option>
-                                                <option value="Student" {{ $users->role_name == 'Student' ? 'selected' : '' }}>Student</option>
+                                                <option value="Admin" {{ $user->role_name == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                                <option value="Super Admin" {{ $user->role_name == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
+                                                <option value="Normal User" {{ $user->role_name == 'Normal User' ? 'selected' : '' }}>Normal User</option>
+                                                <option value="Teachers" {{ $user->role_name == 'Teachers' ? 'selected' : '' }}>Teachers</option>
+                                                <option value="Student" {{ $user->role_name == 'Student' ? 'selected' : '' }}>Student</option>
                                             </select>
                                         </div>
                                     </div>
@@ -73,30 +85,10 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Profile <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control" name="avatar" value="{{ $users->avatar }}">
+                                            <input type="file" class="form-control" name="avatar" value="{{ $user->avatar }}">
                                             <div class="user-img" style="margin-top: -25px;">
-                                                <img class="rounded-circle" src="{{ URL::to('/images/'. $users->avatar) }}">
+                                                <img class="rounded-circle" src="{{Storage::url($user->avatar)}}">
                                             </div>
-                                        </div>
-                                        <input type="hidden" name="hidden_avatar" value="{{ $users->avatar }}">
-                                    </div>
-
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Position <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="position" value="{{ $users->position }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Department <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="department" value="{{ $users->department }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Updated Date <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="updated_at" value="{{ $users->updated_at }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-12">

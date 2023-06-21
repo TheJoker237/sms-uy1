@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
+use App\Models\Teacher;
 use Auth;
 use Carbon\Carbon;
 use App\Models\User;
@@ -13,6 +15,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserManagementController extends Controller
@@ -27,8 +30,8 @@ class UserManagementController extends Controller
     /** user view */
     public function userView($id)
     {
-        $users = User::where('user_id',$id)->first();
-        return view('usermanagement.user_update',compact('users'));
+        $user = User::where('id',$id)->first();
+        return view('usermanagement.user_update',compact('user'));
     }
 
     /** user Update */
@@ -38,45 +41,36 @@ class UserManagementController extends Controller
         try {
             if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
             {
-                $user_id       = $request->user_id;
-                $name         = $request->name;
+                $username     = $request->name;
+                $firstName    = $request->first_name;
+                $lastName     = $request->last_name;
                 $email        = $request->email;
                 $role_name    = $request->role_name;
-                $position     = $request->position;
                 $phone        = $request->phone_number;
-                $department   = $request->department;
                 $status       = $request->status;
-
-                $image_name = $request->hidden_avatar;
-                $image = $request->file('avatar');
-
-                if($image_name =='photo_defaults.jpg') {
-                    if ($image != '') {
-                        $image_name = rand() . '.' . $image->getClientOriginalExtension();
-                        $image->move(public_path('/images/'), $image_name);
-                    }
-                } else {
-                    
-                    if($image != '') {
-                        unlink('images/'.$image_name);
-                        $image_name = rand() . '.' . $image->getClientOriginalExtension();
-                        $image->move(public_path('/images/'), $image_name);
-                    }
+                $id           = $request->user_id;
+                if($request->avatar)
+                {
+                    $image_name = time() . '.' . $request->avatar->extension();
+                    $image_name = $request->file('avatar')->storeAs('images',$image_name,'public');
+                }
+                else{
+                    $image_name = User::find($id)->avatar;
                 }
             
                 $update = [
-                    'user_id'      => $user_id,
-                    'name'         => $name,
+                    'username'     => $username,
+                    'first_name'   => $firstName,
+                    'last_name'    => $lastName,
                     'role_name'    => $role_name,
                     'email'        => $email,
-                    'position'     => $position,
                     'phone_number' => $phone,
-                    'department'   => $department,
                     'status'       => $status,
                     'avatar'       => $image_name,
+                    'updated_at'   => now(),
                 ];
 
-                User::where('user_id',$request->user_id)->update($update);
+                User::where('id',$id)->update($update);
             } else {
                 Toastr::error('User update fail :)','Error');
             }
@@ -94,16 +88,28 @@ class UserManagementController extends Controller
     /** user delete */
     public function userDelete(Request $request)
     {
+        $id = $request->user_id;
         DB::beginTransaction();
         try {
             if (Session::get('role_name') === 'Super Admin')
             {
-                if ($request->avatar =='photo_defaults.jpg')
+                if (! $request->avatar =='images/photo_defaults.jpg')
                 {
-                    User::destroy($request->user_id);
-                } else {
-                    User::destroy($request->user_id);
-                    unlink('images/'.$request->avatar);
+                    Storage::disk('public')->delete($request->avatar);
+                }
+                //Need to destroy any polymorphic parent if exist
+                if($type = User::find($id)->userable_type){
+                    if($type == Teacher::class){
+                        //Delete Teacher
+                        Teacher::destroy($id);
+                    }
+                    elseif($type == Teacher::class){
+                        // Delete Student
+                        Student::destroy($id);
+                    }
+                }
+                else{
+                    User::destroy($id);
                 }
             } else {
                 Toastr::error('User deleted fail :)','Error');

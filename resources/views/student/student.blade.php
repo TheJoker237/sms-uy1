@@ -72,16 +72,14 @@
                                             </th>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Class</th>
-                                            <th>DOB</th>
-                                            <th>Parent Name</th>
+                                            <th>Date Of Birth</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($studentList as $key=>$list )
+                                        @foreach ($studentList as $key=>$student )
                                         <tr>
                                             <td>
                                                 <div class="form-check check-tables">
@@ -89,24 +87,23 @@
                                                 </div>
                                             </td>
                                             <td>STD{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
-                                            <td hidden class="avatar">{{ $list->upload }}</td>
+                                            <td hidden class="id">{{ $student->id }}</td>
+                                            <td hidden class="avatar">{{ $student->user->avatar }}</td>
+
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="student-details.html"class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$list->upload) }}" alt="User Image">
+                                                        <img class="avatar-img rounded-circle" src="{{Storage::url($student->user->avatar)}}" alt="User Image">
                                                     </a>
-                                                    <a href="student-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
+                                                    <a href="student-details.html">{{ $student->user->first_name }} {{ $student->user->last_name }}</a>
                                                 </h2>
                                             </td>
-                                            <td>{{ $list->class }} {{ $list->section }}</td>
-                                            <td>{{ $list->date_of_birth }}</td>
-                                            <td>Soeng Soeng</td>
-                                            <td>{{ $list->phone_number }}</td>
-                                            <td>110 Sen Sok Steet,PP</td>
+                                            <td>{{ $student->user->date_of_birth }}</td>
+                                            <td>{{ $student->user->phone_number }}</td>
+                                            <td>{{ $student->user->address }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('student/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <a href="{{ url('student/edit/'.$student->id) }}" class="btn btn-sm bg-danger-light">
                                                         <i class="feather-edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">

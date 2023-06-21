@@ -13,21 +13,29 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('users');
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('user_id')->nullable();
-            $table->string('email')->nullable();
-            $table->string('join_date')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->string('username')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('join_date')->nullable();
             $table->string('status')->nullable();
             $table->string('role_name')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('position')->nullable();
-            $table->string('department')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            //Morphic relation between User and Children Class
+            $table->integer('userable_id')->nullable();
+            $table->string('userable_type')->nullable();
             $table->timestamps();
         });
     }

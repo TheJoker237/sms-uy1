@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('examen/save') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('requete/save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 {{-- <input type="hidden" class="form-control" name="id" value="{{ $examen->id }}" readonly> --}}
                                 <div class="row">
@@ -83,54 +83,28 @@
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Type <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('type') is-invalid @enderror" name="type">
-                                                <option selected disabled>Select Type</option>
-                                                <option value="Controle Continue" >Controle Continue</option>
-                                                <option value="Session Normale" >Session Normale</option>
-                                            </select>
-                                            @error('type')
+                                        <div class="form-group students-up-files">
+                                            <label>Upload Requete File (.doc .docx .pdf)</label>
+                                            <div class="uplod">
+                                                <label class="file-upload image-upbtn mb-0 @error('upload') is-invalid @enderror">
+                                                    Choose File <input type="file" name="upload">
+                                                </label>
+                                                @error('upload')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Session <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('session') is-invalid @enderror" name="session">
-                                                <option selected disabled>Select Session</option>
-                                                <option value="Normale">Normale</option>
-                                                <option value="Rattrapage" >Rattrapage</option>
-                                            </select>
-                                            @error('session')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms calendar-icon">
-                                            <label>Date Of Examen <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control datetimepicker @error('date_of_exam') is-invalid @enderror" name="date_of_exam" placeholder="DD-MM-YYYY" value="">
-                                            @error('date_of_exam')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <div class="col-12">
                                         <div class="student-submit">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
-
                                     {{-- // --}}
 
                                     

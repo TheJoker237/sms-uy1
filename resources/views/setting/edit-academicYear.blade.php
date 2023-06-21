@@ -22,7 +22,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('setting/page/academicYear') }}">Academic Year</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="payment-settings.html">Payment Settings</a>
                     </li>
                     <li class="nav-item">
@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="others-settings.html">Others</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
 

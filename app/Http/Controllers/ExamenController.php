@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Examen;
+use App\Models\Faculte;
+use App\Models\Filiere;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
@@ -17,14 +20,14 @@ class ExamenController extends Controller
 
     public function examenAdd()
     {
-        $faculteList = [];
-        $filiereList = [];
-        $courseList = [];
+        $faculteList = Faculte::all();
+        $filiereList = Filiere::all();
+        $courseList = Course::all();
         return view('examen.add-examen', compact('faculteList','filiereList','courseList'));
     }
 
     /** examen save record */
-    public function studentSave(Request $request)
+    public function examenSave(Request $request)
     {
         $request->validate([
             'first_name'    => 'required|string',

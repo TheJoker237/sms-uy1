@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('examen/save') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('note/save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 {{-- <input type="hidden" class="form-control" name="id" value="{{ $examen->id }}" readonly> --}}
                                 <div class="row">
@@ -114,22 +114,42 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms calendar-icon">
-                                            <label>Date Of Examen <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control datetimepicker @error('date_of_exam') is-invalid @enderror" name="date_of_exam" placeholder="DD-MM-YYYY" value="">
-                                            @error('date_of_exam')
+                                        <div class="form-group local-forms">
+                                            <label>Student <span class="login-danger">*</span></label>
+                                            <select class="form-control select  @error('session') is-invalid @enderror" name="session">
+                                                <option selected disabled>Select Student</option>
+                                                <option value=""></option>
+                                                
+                                            </select>
+                                            @error('session')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Note </label>
+                                            <input class="form-control @error('phone_number') is-invalid @enderror" type="number"  name="phone_number" placeholder="Enter Note" value="">
+                                            @error('phone_number')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="col-12">
                                         <div class="student-submit">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
+
+                                    
 
                                     {{-- // --}}
 

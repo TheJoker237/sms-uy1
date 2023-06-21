@@ -22,24 +22,6 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('setting/page/academicYear') }}">Academic Year</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="payment-settings.html">Payment Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="email-settings.html">Email Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="social-settings.html">Social Media Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="social-links.html">Social Links</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="seo-settings.html">SEO Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="others-settings.html">Others</a>
-                    </li>
                 </ul>
             </div>
 

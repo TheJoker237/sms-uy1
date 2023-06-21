@@ -30,11 +30,7 @@
                             <input type="text" class="form-control" placeholder="Search by Title ...">
                         </div>
                     </div>
-                    {{-- <div class="col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Phone ...">
-                        </div>
-                    </div> --}}
+                   
                     <div class="col-lg-2">
                         <div class="search-student-btn">
                             <button type="btn" class="btn btn-primary">Search</button>
@@ -55,7 +51,7 @@
                                         <a href="{{ route('student/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
                                         <a href="{{ route('student/grid') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
                                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        {{-- <a href="{{ route('student/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a> --}}
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -73,10 +69,7 @@
                                             <th>ID</th>
                                             <th>Code</th>
                                             <th>Title</th>
-                                            {{-- <th>DOB</th>
-                                            <th>Parent Name</th>
-                                            <th>Mobile Number</th>
-                                            <th>Address</th> --}}
+                                            
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
@@ -91,20 +84,10 @@
                                             <td>CR{{ ++$key }}</td>
                                             <td hidden class="id">{{ $course->id }}</td>
                                             <td hidden class="filiere">{{ $course->filiere->title}}</td>
-                                            {{-- <td hidden class="avatar">{{ $course->upload }}</td> --}}
-                                            {{-- <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="student-details.html"class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$course->upload) }}" alt="User Image">
-                                                    </a>
-                                                    <a href="student-details.html">{{ $course->first_name }} {{ $course->last_name }}</a>
-                                                </h2>
-                                            </td> --}}
+                                            
                                             <td class="course-code">{{ $course->code}}</td>
                                             <td class="course-title">{{ $course->title}}</td>
-                                            {{-- <td>Soeng Soeng</td> --}}
-                                            {{-- <td>{{ $course->phone_number }}</td> --}}
-                                            {{-- <td>110 Sen Sok Steet,PP</td> --}}
+                                            
                                             <td class="text-end">
                                                 <div class="actions">
                                                     <a href="#" class="btn btn-sm bg-danger-light course-edit">
@@ -152,7 +135,7 @@
                                                 @foreach($filiereList as $filiere)
                                                 <option value="{{$filiere->title}}">{{$filiere->title}}</option>
                                                 @endforeach
-                                                {{-- <input type="hidden" class="form-control" name="id" value="{{$filiere->id}}" readonly> --}}
+                                                
                                             </select>
                                             @error('faculty')
                                                 <span class="invalid-feedback" role="alert">

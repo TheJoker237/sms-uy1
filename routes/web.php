@@ -5,18 +5,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ExamenController;
+use App\Http\Controllers\FiliereController;
+use App\Http\Controllers\RequeteController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TypeFormController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\FiliereController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\ExamenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +83,7 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(UserManagementController::class)->group(function () {
     Route::get('list/users', 'index')->middleware('auth')->name('list/users');
     Route::post('change/password', 'changePassword')->name('change/password');
-    Route::get('view/user/edit/{id}', 'userView')->middleware('auth');
+    Route::get('user/edit/{id}', 'userView')->middleware('auth');
     Route::post('user/update', 'userUpdate')->name('user/update');
     Route::post('user/delete', 'userDelete')->name('user/delete');
 });
@@ -125,6 +127,28 @@ Route::controller(ExamenController::class)->group(function () {
     // Route::post('examen/edit', 'filiereEdit')->name('filiere/edit'); // edit view examen
 });
 
+// ------------------------ Note -------------------------------//
+Route::controller(NoteController::class)->group(function () {
+    Route::get('note/list', 'note')->middleware('auth')->name('note/list');
+    Route::get('note/add', 'noteAdd')->middleware('auth')->name('note/add');
+    Route::post('note/save', 'noteSave')->name('note/save'); // save record note
+    Route::get('note/edit/{id}', 'noteEdit')->name('note/edit'); // edit view note
+    Route::post('note/update', 'noteUpdate')->name('note/update'); // update record note
+    Route::post('note/delete', 'noteDelete')->name('note/delete'); // delete record note
+    // Route::post('note/edit', 'filiereEdit')->name('filiere/edit'); // edit view note
+});
+
+// ------------------------ Requete -------------------------------//
+Route::controller(RequeteController::class)->group(function () {
+    Route::get('requete/list', 'requete')->middleware('auth')->name('requete/list');
+    Route::get('requete/add', 'requeteAdd')->middleware('auth')->name('requete/add');
+    Route::post('requete/save', 'requeteSave')->name('requete/save'); // save record requete
+    Route::get('requete/edit/{id}', 'requeteEdit')->name('requete/edit'); // edit view requete
+    Route::post('requete/update', 'requeteUpdate')->name('requete/update'); // update record requete
+    Route::post('requete/delete', 'requeteDelete')->name('requete/delete'); // delete record requete
+    // Route::post('note/edit', 'filiereEdit')->name('filiere/edit'); // edit view requete
+});
+
 // ------------------------ student -------------------------------//
 Route::controller(StudentController::class)->group(function () {
     Route::get('student/list', 'student')->middleware('auth')->name('student/list'); // list student
@@ -139,9 +163,9 @@ Route::controller(StudentController::class)->group(function () {
 
 // ------------------------ teacher -------------------------------//
 Route::controller(TeacherController::class)->group(function () {
-    Route::get('teacher/add/page', 'teacherAdd')->middleware('auth')->name('teacher/add/page'); // page teacher
-    Route::get('teacher/list/page', 'teacherList')->middleware('auth')->name('teacher/list/page'); // page teacher
-    Route::get('teacher/grid/page', 'teacherGrid')->middleware('auth')->name('teacher/grid/page'); // page grid teacher
+    Route::get('teacher/add', 'teacherAdd')->middleware('auth')->name('teacher/add'); // page teacher
+    Route::get('teacher/list', 'teacherList')->middleware('auth')->name('teacher/list'); // page teacher
+    Route::get('teacher/grid', 'teacherGrid')->middleware('auth')->name('teacher/grid'); // page grid teacher
     Route::post('teacher/save', 'saveRecord')->middleware('auth')->name('teacher/save'); // save record
     Route::get('teacher/edit/{id}', 'editRecord'); // view teacher record
     Route::post('teacher/update', 'updateRecordTeacher')->middleware('auth')->name('teacher/update'); // update record

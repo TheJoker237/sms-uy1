@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('title');
-            $table->foreignId('filiere_id')->constrained()
-                                        ->onUpdate('cascade')
-                                        ->onDelete('cascade');
+            $table->foreignId('filiere_id')->constrained();
+            
             $table->timestamps();
 
         });

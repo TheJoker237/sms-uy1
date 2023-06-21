@@ -10,7 +10,7 @@
                 <div class="col">
                     <h3 class="page-title">Teachers</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Teachers</li>
                     </ul>
                 </div>
@@ -51,13 +51,13 @@
                                     <h3 class="page-title">Teachers</h3>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="teachers.html" class="btn btn-outline-gray me-2 active"><i
+                                    <a href="{{Route('teacher/list')}}" class="btn btn-outline-gray me-2 active"><i
                                             class="feather-list"></i></a>
-                                    <a href="{{ route('teacher/grid/page') }}" class="btn btn-outline-gray me-2"><i
+                                    <a href="{{ route('teacher/grid') }}" class="btn btn-outline-gray me-2"><i
                                             class="feather-grid"></i></a>
                                     <a href="#" class="btn btn-outline-primary me-2"><i
                                             class="fas fa-download"></i> Download</a>
-                                    <a href="{{ route('teacher/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                    <a href="{{ route('teacher/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -73,17 +73,14 @@
                                         </th>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Class</th>
-                                        <th>Gender</th>
-                                        <th>Subject</th>
-                                        <th>Section</th>
+                                        <th>Grade</th>
                                         <th>Mobile Number</th>
                                         <th>Address</th>
                                         <th class="text-end">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($listTeacher as $list)
+                                    @foreach ($listTeacher as $key=>$teacher)
                                     <tr>
                                         <td>
                                             <div class="form-check check-tables">
@@ -91,29 +88,22 @@
                                                     value="something">
                                             </div>
                                         </td>
-                                        <td hidden class="id">{{ $list->id }}</td>
-                                        <td>{{ $list->user_id }}</td>
+                                        <td hidden class="id">{{ $teacher->id }}</td>
+                                        <td>{{ $key }}</td>
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="teacher-details.html" class="avatar avatar-sm me-2">
-                                                    @if (!empty($list->avatar))
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('images/'.$list->avatar) }}" alt="{{ $list->name }}">
-                                                    @else
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" alt="{{ $list->name }}">
-                                                    @endif
+                                                    <img class="avatar-img rounded-circle" src="{{Storage::url($teacher->user->avatar)}}" alt="{{ $teacher->user->full_name }}">
                                                 </a>
-                                                <a href="teacher-details.html">{{ $list->name }}</a>
+                                                <a href="teacher-details.html">{{ $teacher->title.' '.$teacher->user->first_name.' '.$teacher->user->last_name}}</a>
                                             </h2>
                                         </td>
-                                        <td>10</td>
-                                        <td>{{ $list->gender }}</td>
-                                        <td>Mathematics</td>
-                                        <td>A</td>
-                                        <td>{{ $list->mobile }}</td>
-                                        <td>{{ $list->address }}</td>
+                                        <td>{{ $teacher->grade }}</td>
+                                        <td>{{ $teacher->user->phone_number }}</td>
+                                        <td>{{ $teacher->user->address }}</td>
                                         <td class="text-end">
                                             <div class="actions">
-                                                <a href="{{ url('teacher/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                <a href="{{ url('teacher/edit/'.$teacher->id) }}" class="btn btn-sm bg-danger-light">
                                                     <i class="feather-edit"></i>
                                                 </a>
                                                 <a class="btn btn-sm bg-danger-light teacher_delete" data-bs-toggle="modal" data-bs-target="#teacherDelete">

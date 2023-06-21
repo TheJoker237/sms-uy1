@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Examens</h3>
+                            <h3 class="page-title">Requetes</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/list') }}">Student</a></li>
-                                <li class="breadcrumb-item active">All Examens</li>
+                                <li class="breadcrumb-item"><a href="{{ route('requete/list') }}">Requete</a></li>
+                                <li class="breadcrumb-item active">All Requetes</li>
                             </ul>
                         </div>
                     </div>
@@ -52,10 +52,10 @@
                                         <h3 class="page-title">Examens</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('examen/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
-                                        <a href="{{ route('examen/list') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
+                                        <a href="{{ route('requete/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
+                                        <a href="{{ route('requete/list') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
                                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ route('examen/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <a href="{{ route('requete/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +74,9 @@
                                             <th>Faculté</th>
                                             <th>Filière</th>
                                             <th>Course</th>
-                                            <th>Type</th>
-                                            <th>Session</th>
+                                            <th>Requête</th>
+                                            <th>Jury</th>
+                                            <th>Etudiant</th>
                                             <th>Date</th>
                                             <th class="text-end">Action</th>
                                         </tr>
@@ -98,6 +99,7 @@
                                                         <td class="course">{{ $course->title }}</td>
                                                         <td class="type">{{ $examen->type }}</td>
                                                         <td class="session">{{ $examen->session }}</td>
+                                                        <td class="date">{{ $examen->date }}</td>
                                                         <td class="date">{{ $examen->date }}</td>
                                                         <td class="text-end">
                                                             <div class="actions">

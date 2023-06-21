@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('examens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('academicYear_id')->constrained()
-                                        ->onUpdate('cascade')
-                                        ->onDelete('cascade');
+            $table->foreignId('academic_Year_id')->constrained();
             $table->string('type',2);
             $table->string('session',12);
             $table->date('date');

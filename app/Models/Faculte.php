@@ -16,10 +16,12 @@ class Faculte extends Model
     // ];
     protected $guarded = [];
 
+    // Relation One to Many Faculte and Filieres
     public function filieres(){
         return $this->hasMany(Filiere::class);
     }
 
+    // Relation Many to Many Faculte and Examens
     public function examens()
     {
         return $this->belongsToMany(Examen::class);

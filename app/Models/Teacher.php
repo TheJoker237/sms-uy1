@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Doyen;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,5 +32,19 @@ class Teacher extends Model
     public function doyen()
     {
         return $this->hasOne(Doyen::class);
+    }
+
+    // Relation Many to Many with Courses
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    /**
+     * Get the Teacher's user.
+     */
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
     }
 }

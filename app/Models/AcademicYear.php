@@ -14,6 +14,8 @@ class AcademicYear extends Model
     // ];
     protected $guarded = [];
 
+
+    // Relation One to Many between Academic Year and Examens
     public function examens()
     {
         return $this->hasMany(Examen::class);

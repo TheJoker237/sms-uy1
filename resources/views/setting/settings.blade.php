@@ -22,7 +22,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('setting/page/academicYear') }}">Academic Year</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="payment-settings.html">Payment Settings</a>
                     </li>
                     <li class="nav-item">
@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="others-settings.html">Others</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
 
@@ -140,33 +140,16 @@
                                                 <input type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>State/Province <span class="star-red">*</span></label>
-                                                <select class="select form-control">
-                                                    <option selected="selected">Select</option>
-                                                    <option>California</option>
-                                                    <option>Tasmania</option>
-                                                    <option>Auckland</option>
-                                                    <option>Marlborough</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Zip/Postal Code <span class="star-red">*</span></label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </div>
+                                        
+                                        
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Country <span class="star-red">*</span></label>
                                                 <select class="select form-control">
                                                     <option selected="selected">Select</option>
-                                                    <option>India</option>
-                                                    <option>London</option>
-                                                    <option>France</option>
-                                                    <option>USA</option>
+                                                    <option>Cameroun</option>
+                                                    <option>Ghana</option>
+                                                    <option>Tchad</option>
                                                 </select>
                                             </div>
                                         </div>

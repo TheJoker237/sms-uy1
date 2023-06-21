@@ -16,13 +16,20 @@ class Course extends Model
     // ];
     protected $guarded = [];
 
+    // Relation Many to One between Courses and Filiere
     public function filiere(){
         return $this->belongsTo(Filiere::class);
     }
 
+    // Relation Many to Many between Courses and Examens
     public function examens(){
         return $this->belongsToMany(Examen::class);
     }
 
+    // Relation Many to Many between Courses and Teachers
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class);    
+    }
     
 }

@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Teacher>
+ */
+class TeacherFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'full_name' => fake()->name(),
+            'gender' => 'Male',
+            'date_of_birth' => date($format = 'Y-m-d', $max = 'now'),
+            'mobile' => fake()->e164PhoneNumber(),
+            'joining_date' => now(),
+            'experience' => fake()->numberBetween($min = 0, $max = 10),
+            'username' => fake()->firstNameMale(),
+            'address' => fake()->address(),
+            'city' => fake()->city(),
+            'state' => fake()->state(),
+            'country' => fake()->country(),
+        ];
+    }
+}

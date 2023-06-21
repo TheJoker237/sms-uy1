@@ -17,27 +17,31 @@ class Examen extends Model
 
     protected $guarded = [];
 
+    // Relation Many to One between Examens and Academic Year
     public function academicYear()
     {
         return $this->belongsTo(AcademicYear::class);
     }
 
-
+    // Relation Many to Many between Examens and Filieres
     public function filieres()
     {
         $this->belongsToMany(Filiere::class);
     }
 
+    // Relation Many to Many between Examens and Facultes
     public function facultes()
     {
         return $this->belongsToMany(Faculte::class);
     }
 
+    // Relation Many to Many between Examens and Courses
     public function courses()
     {
         return $this->belongsToMany(Course::class);
     }
 
+    // Relation One to Many between Examen and Notes
     public function notes()
     {
         return $this->hasMany(Note::class);

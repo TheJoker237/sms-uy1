@@ -25,11 +25,6 @@
                                 <div class="col">
                                     <h3 class="page-title">Users List</h3>
                                 </div>
-                                <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="add-time-table.html" class="btn btn-primary">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
 
@@ -50,37 +45,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $key=>$list )
+                                    @foreach ($users as $key=>$user )
                                     <tr>
-                                        <td class="user_id">{{ $list->user_id }}</td>
-                                        <td hidden class="avatar">{{ $list->avatar }}</td>
+                                        <td>{{ $key }}</td>
+                                        <td hidden class="user_id">{{ $user->id }}</td>
+                                        <td hidden class="avatar">{{ $user->avatar }}</td>
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a class="avatar avatar-sm me-2">
-                                                    <img class="avatar-img rounded-circle"src="/images/{{ $list->avatar }}"alt="{{ $list->name }}">
+                                                    <img class="avatar-img rounded-circle"src="{{Storage::url($user->avatar)}}"alt="{{ $user->first_name}}">
                                                 </a>
                                             </h2>
                                         </td>
-                                        <td>{{ $list->name }}</td>
-                                        <td>{{ $list->email }}</td>
-                                        <td>{{ $list->phone_number }}</td>
-                                        <td>{{ $list->join_date }}</td>
-                                        <td>{{ $list->role_name }}</td>
+                                        <td>{{ $user->first_name .' '.$user->last_name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone_number }}</td>
+                                        <td>{{ $user->join_date }}</td>
+                                        <td>{{ $user->role_name }}</td>
                                         <td>
                                             <div class="edit-delete-btn">
-                                                @if ($list->status === 'Active')
-                                                <a class="text-success">{{ $list->status }}</a>
-                                                @elseif ($list->status === 'Inactive')
-                                                <a class="text-warning">{{ $list->status }}</a>
-                                                @elseif ($list->status === 'Disable')
-                                                <a class="text-danger" >{{ $list->status }}</a>
+                                                @if ($user->status === 'Active')
+                                                <a class="text-success">{{ $user->status }}</a>
+                                                @elseif ($user->status === 'Inactive')
+                                                <a class="text-warning">{{ $user->status }}</a>
+                                                @elseif ($user->status === 'Disable')
+                                                <a class="text-danger" >{{ $user->status }}</a>
                                                 @else 
                                                 @endif
                                             </div>
                                         </td>
                                         <td class="text-end">
                                             <div class="actions">
-                                                <a href="{{ url('view/user/edit/'.$list->user_id) }}"class="btn btn-sm bg-danger-light">
+                                                <a href="{{ url('user/edit/'.$user->id) }}"class="btn btn-sm bg-danger-light">
                                                     <i class="feather-edit"></i>
                                                 </a>
                                                 @if (Session::get('role_name') === 'Super Admin')

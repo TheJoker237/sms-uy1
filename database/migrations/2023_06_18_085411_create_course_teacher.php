@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSequenceTblsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateSequenceTblsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sequence_tbl', function (Blueprint $table) {
+        Schema::create('course_teacher', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->constrained();
+            $table->foreignId('course_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class CreateSequenceTblsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sequence_tbl');
+        Schema::dropIfExists('course_teacher');
     }
-}
+};

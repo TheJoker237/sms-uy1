@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -36,45 +38,65 @@ class StudentController extends Controller
         $request->validate([
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
+            'username'      => 'required|string',
             'gender'        => 'required|not_in:0',
             'date_of_birth' => 'required|string',
-            'roll'          => 'required|string',
-            'blood_group'   => 'required|string',
             'religion'      => 'required|string',
             'email'         => 'required|email',
-            'class'         => 'required|string',
-            'section'       => 'required|string',
             'admission_id'  => 'required|string',
             'phone_number'  => 'required',
-            'upload'        => 'required|image',
+            'avatar'        => 'required|image',
         ]);
         
         DB::beginTransaction();
         try {
-           
-            $upload_file = rand() . '.' . $request->upload->extension();
-            $request->upload->move(storage_path('app/public/student-photos/'), $upload_file);
-            if(!empty($request->upload)) {
-                $student = new Student;
-                $student->first_name   = $request->first_name;
-                $student->last_name    = $request->last_name;
-                $student->gender       = $request->gender;
-                $student->date_of_birth= $request->date_of_birth;
-                $student->roll         = $request->roll;
-                $student->blood_group  = $request->blood_group;
-                $student->religion     = $request->religion;
-                $student->email        = $request->email;
-                $student->class        = $request->class;
-                $student->section      = $request->section;
-                $student->admission_id = $request->admission_id;
-                $student->phone_number = $request->phone_number;
-                $student->upload = $upload_file;
-                $student->save();
-
-                Toastr::success('Has been add successfully :)','Success');
-                DB::commit();
+            $roleName = 'Student';
+            $defaultAvatar = 'images/default_avatar.png';
+            $firstName    = $request->first_name;
+            $lastName     = $request->last_name;
+            $userName     = $request->username;
+            $gender       = $request->gender;
+            $email        = $request->email;
+            $dob          = $request->date_of_birth;
+            $phone        = $request->phone_number;
+            $religion     = $request->religion;
+            $studentId    = $request->admission_id;
+            $password     = $request->password;
+            $id           = $request->id;
+            if($request->avatar)
+            {
+                $image_name = time() . '.' . $request->avatar->extension();
+                $image_name = $request->file('avatar')->storeAs('images',$image_name,'public');
+            }
+            else{
+                $image_name = $defaultAvatar;
             }
 
+            $student = Student::create([
+                'religion'   => $religion,
+                'student_id' => $studentId,
+                'created_at' => now(),
+            ]);
+
+            $user = new User([
+                'first_name'   => $firstName,
+                'last_name'    => $lastName,
+                'username'     => $userName,
+                'gender'       => $gender,
+                'avatar'       => $image_name,
+                'email'        => $email,
+                'date_of_birth'=> $dob,
+                'phone_number' => $phone,
+                'join_date' => now(),
+                'role_name' => $roleName,
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'created_at' => now(),
+            ]);
+            $student->user()->save($user);
+
+            Toastr::success('Has been add successfully :)','Success');
+            DB::commit();
             return redirect()->back();
            
         } catch(\Exception $e) {
@@ -96,32 +118,46 @@ class StudentController extends Controller
     {
         DB::beginTransaction();
         try {
-
-            if (!empty($request->upload)) {
-                unlink(storage_path('app/public/student-photos/'.$request->image_hidden));
-                $upload_file = rand() . '.' . $request->upload->extension();
-                $request->upload->move(storage_path('app/public/student-photos/'), $upload_file);
-            } else {
-                $upload_file = $request->image_hidden;
+            $firstName    = $request->first_name;
+            $lastName     = $request->last_name;
+            $userName     = $request->username;
+            $gender       = $request->gender;
+            $email        = $request->email;
+            $dob          = $request->date_of_birth;
+            $phone        = $request->phone_number;
+            $religion     = $request->religion;
+            $studentId    = $request->admission_id;
+            $id           = $request->id;
+            if($request->avatar)
+            {
+                $image_name = time() . '.' . $request->avatar->extension();
+                $image_name = $request->file('avatar')->storeAs('images',$image_name,'public');
             }
-           
+            else{
+                $image_name = User::find($id)->avatar;
+            }
+
             $updateRecord = [
-                'upload' => $upload_file,
-                'first_name'   => $request->first_name,
-                'last_name'    => $request->last_name,
-                'gender'       => $request->gender,
-                'date_of_birth'=> $request->date_of_birth,
-                'roll'         => $request->roll,
-                'blood_group'  => $request->blood_group,
-                'religion'     => $request->religion,
-                'email'        => $request->email,
-                'class'        => $request->class,
-                'section'      => $request->section,
-                'admission_id' => $request->admission_id,
-                'phone_number' => $request->phone_number,
+                'religion'   => $religion,
+                'student_id' => $studentId,
+                'updated_at' => now(),
             ];
-            Student::where('id',$request->id)->update($updateRecord);
-            
+            $student = Student::where('id',$id);
+            $student->update($updateRecord);
+
+            $userRecord = [
+                'first_name'   => $firstName,
+                'last_name'    => $lastName,
+                'username'    => $userName,
+                'gender'       => $gender,
+                'avatar'       => $image_name,
+                'email'        => $email,
+                'date_of_birth'=> $dob,
+                'phone_number' => $phone,
+                'updated_at' => now(),
+            ];
+            User::where('userable_id',$id)->where('userable_type',Student::class)->update($userRecord);
+
             Toastr::success('Has been update successfully :)','Success');
             DB::commit();
             return redirect()->back();
@@ -139,13 +175,16 @@ class StudentController extends Controller
         DB::beginTransaction();
         try {
            
-            if (!empty($request->id)) {
-                Student::destroy($request->id);
-                unlink(storage_path('app/public/student-photos/'.$request->avatar));
-                DB::commit();
-                Toastr::success('Student deleted successfully :)','Success');
-                return redirect()->back();
+            if (! $request->avatar =='images/photo_defaults.jpg')
+            {
+                Storage::disk('public')->delete($request->avatar);
             }
+            Student::destroy($request->id);
+            //Delete the User related to this student
+            User::destroy($request->id);
+            DB::commit();
+            Toastr::success('Student deleted successfully :)','Success');
+            return redirect()->back();
     
         } catch(\Exception $e) {
             DB::rollback();
