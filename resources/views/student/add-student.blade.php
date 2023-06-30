@@ -10,7 +10,7 @@
                         <div class="page-sub-header">
                             <h3 class="page-title">Add Students</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/add/page') }}">Student</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('student/list') }}">Students</a></li>
                                 <li class="breadcrumb-item active">Add Students</li>
                             </ul>
                         </div>

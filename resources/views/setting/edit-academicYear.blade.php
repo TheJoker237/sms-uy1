@@ -124,7 +124,7 @@
                                             {{-- <td>110 Sen Sok Steet,PP</td> --}}
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('setting/page/academicYear/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <a href="#" class="btn btn-sm bg-danger-light academicYear-edit">
                                                         <i class="feather-edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">

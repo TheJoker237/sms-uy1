@@ -29,19 +29,24 @@ class Teacher extends Model
 
     protected $guarded = [];
     
-    public function doyen()
+    /**
+     * ! Get the parent Teacherable model (doyen or Not)
+     */
+    public function teacherable()
     {
-        return $this->hasOne(Doyen::class);
+        return $this->morphTo();
     }
 
-    // Relation Many to Many with Courses
+    /**
+     * % Get all the Courses of a Teacher
+     */
     public function courses()
     {
         return $this->belongsToMany(Course::class);
     }
 
     /**
-     * Get the Teacher's user.
+     * ! Get the Teacher's user.
      */
     public function user()
     {

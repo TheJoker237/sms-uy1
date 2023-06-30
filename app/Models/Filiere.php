@@ -18,23 +18,23 @@ class Filiere extends Model
     // ];
     protected $guarded = [];
 
-    // Relation One to Many Filieres and Courses
+    /**
+     * % Get The Courses of The Filieres 
+     */
     public function courses(){
         return $this->hasMany(Course::class);
     }
 
-    // Relation Many to one Filieres and Fculte
+    /**
+     * % Get The Faculty that Own The Filiere
+     */
     public function faculte(){
         return $this->belongsTo(Faculte::class);
     }
 
-    // Relation Many to Many Filieres and Examens
-    public function examens()
-    {
-        return $this->belongsToMany(Examen::class);
-    }
-
-    // Relation One to Many Filiere and Students
+    /**
+     * % Get All Students Of A Filiere
+     */
     public function students()
     {
         return $this->hasMany(Student::class);

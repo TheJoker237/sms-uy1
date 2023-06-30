@@ -22,6 +22,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('setting/page/academicYear') }}">Academic Year</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('setting/doyen')}}">Doyen Settings</a>
+                    </li>
                 </ul>
             </div>
 
@@ -81,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($academicYears as $key=>$list )
+                                        @foreach ($academicYears as $key=>$academicYear )
                                         <tr>
                                             <td>
                                                 <div class="form-check check-tables">
@@ -89,24 +92,25 @@
                                                 </div>
                                             </td>
                                             <td>YR{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
-                                            {{-- <td hidden class="avatar">{{ $list->upload }}</td> --}}
+                                            <td hidden class="id">{{ $academicYear->id }}</td>
+                                            {{-- <td hidden class="avatar">{{ $academicYear->upload }}</td> --}}
                                             {{-- <td>
                                                 <h2 class="table-avatar">
                                                     <a href="student-details.html"class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$list->upload) }}" alt="User Image">
+                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$academicYear->upload) }}" alt="User Image">
                                                     </a>
-                                                    <a href="student-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
+                                                    <a href="student-details.html">{{ $academicYear->first_name }} {{ $academicYear->last_name }}</a>
                                                 </h2>
                                             </td> --}}
-                                            <td>{{ $list->year}}</td>
-                                            {{-- <td>{{ $list->date_of_birth }}</td> --}}
+                                            <td class="year">{{date('d-m-Y', strtotime($academicYear->year))}}</td>
+                                            {{-- <td>State</td> --}}
+                                            {{-- <td>{{ $academicYear->date_of_birth }}</td> --}}
                                             {{-- <td>Soeng Soeng</td> --}}
-                                            {{-- <td>{{ $list->phone_number }}</td> --}}
+                                            {{-- <td>{{ $academicYear->phone_number }}</td> --}}
                                             {{-- <td>110 Sen Sok Steet,PP</td> --}}
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('setting/page/academicYear/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <a href="#" class="btn btn-sm bg-danger-light academicYear-edit">
                                                         <i class="feather-edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
@@ -125,21 +129,28 @@
                 <div class="col-sm-6">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('setting/page/academicYear/save') }}" method="POST" enctype="application/x-www-form-urlencoded">
+                            <form id="academicYear-form" action="{{ route('setting/page/academicYear/save') }}" method="POST" enctype="application/x-www-form-urlencoded">
                                 @csrf
+                                <input type="hidden" class="form-control" name="id" value="" readonly>
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Academic Year Create
+                                        <h5 class="form-title">
+                                            <span class="academicYear-info">
+                                                Academic Year Create
+                                            </span>
                                             <span>
                                                 <a href="javascript:;"><i class="feather-more-vertical"></i></a>
                                             </span>
                                         </h5>
+                                        <div class="col-auto text-end float-end ms-auto download-grp academicYear-add">
+                                            <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </div>
                                     </div>
                                     
                                     <div class="col-6 col-sm-4">
                                         <div class="form-group local-forms calendar-icon">
                                             <label>Academic Year <span class="login-danger">*</span></label>
-                                            <input class="form-control datetimepicker @error('date_of_birth') is-invalid @enderror" name="academic_year" type="text" placeholder="DD-MM-YYYY" value="{{ old('date_of_birth') }}">
+                                            <input class="year-filed form-control datetimepicker @error('date_of_birth') is-invalid @enderror" name="academic_year" type="text" placeholder="DD-MM-YYYY" value="">
                                             {{-- Need to be complete --}}
                                             @error('date_of_birth')
                                                 <span class="invalid-feedback" role="alert">

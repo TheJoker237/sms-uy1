@@ -64,28 +64,73 @@
                     </ul>
                 </li>
 
-                <li class="submenu  {{set_active(['examen/add','examen/list','examen/edit'])}} {{ (request()->is('examen/edit/*')) ? 'active' : '' }}">
+                <li class="submenu  {{set_active(['examen/add','examen/list','examen/edit', 'examen/controle' , 'examen/session'])}} {{ (request()->is('examen/edit/*')) ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book-reader"></i>
                         <span> Examens</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ route('examen/list') }}" class="{{set_active(['examen/list'])}}">Examen List</a></li>
+                        <li class="submenu">
+                            <a href="#" class="{{set_active(['examen/list'])}}">
+                                <span>Examen List</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('examen/controle') }}" class="{{set_active(['examen/controle'])}}">Controles</a></li>
+                                <li><a href="{{ route('examen/session') }}" class="{{set_active(['examen/session'])}}">Sessions</a></li>
+                            </ul>
+                        </li>
                         <li><a href="{{ route('examen/add') }}" class="{{set_active(['examen/add'])}}">Examen Add</a></li>
                     </ul>
                 </li>
                 
-                <li class="submenu {{set_active(['note/add','note/list','note/edit'])}} ">
+                <li class="submenu {{set_active(['note/add','note/list','note/edit','note/controle', 'note/session'])}} {{ (request()->is('note/edit/*')) ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-building"></i>
                         <span> Notes</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ route('note/list') }}" class="{{set_active(['note/list'])}}">Note List</a></li>
+                        <li class="submenu">
+                            <a href="#" class="{{set_active(['note/list'])}}">
+                                <span>Note List</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('note/controle') }}" class="{{set_active(['note/controle'])}}">Controles</a></li>
+                                <li><a href="{{ route('note/session') }}" class="{{set_active(['note/session'])}}">Sessions</a></li>
+                            </ul>
+                        </li>
                         <li><a href="{{ route('note/add') }}" class="{{set_active(['note/add'])}}">Note Add</a></li>
                     </ul>
                 </li>
-                <li class="submenu {{set_active(['requete/add','requete/list','requete/edit'])}}">
+                <li class="submenu {{set_active(['pv/list','pv/session/normale','pv/session/rattrapage'])}} {{ (request()->is('pv/*')) ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-building"></i>
+                        <span> PV</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li class="submenu">
+                            <a href="#" class="{{set_active(['pv/list','pv/session/normale','pv/session/rattrapage'])}} ">
+                                <span>PV List</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li><a href="{{ route('pv/session/normale') }}" class="{{set_active(['pv/session/normale'])}}">Sessions Normale</a></li>
+                                <li><a href="{{ route('pv/session/rattrapage') }}" class="{{set_active(['pv/session/rattrapage'])}}">Sessions Rattrapage</a></li>
+                            </ul>
+                        </li>
+                        {{-- <li><a href="{{ route('note/add') }}" class="{{set_active(['note/add'])}}">Note Add</a></li> --}}
+                    </ul>
+                </li>
+                {{-- <li class="submenu {{set_active(['pv/list'])}}">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> PV</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('pv/list') }}"  class="{{set_active(['pv/list'])}}">PV List</a></li>
+                    </ul>
+                <li class="submenu {{set_active(['requete/add','requete/list','requete/edit'])}}"> --}}
                     <a href="#"><i class="fas fa-book-reader"></i>
                         <span> Requêtes</span>
                         <span class="menu-arrow"></span>

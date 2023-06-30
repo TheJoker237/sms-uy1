@@ -9,8 +9,8 @@
                         <div class="page-sub-header">
                             <h3 class="page-title">Courses</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('course/list') }}">Course</a></li>
-                                <li class="breadcrumb-item active">All Courses</li>
+                               <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item active">All Filieres</li>
                             </ul>
                         </div>
                     </div>

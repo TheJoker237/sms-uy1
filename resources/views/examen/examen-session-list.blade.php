@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Examens</h3>
+                            <h3 class="page-title">Examens List</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">All Examens</li>
+                                <li class="breadcrumb-item active">All Sessions</li>
                             </ul>
                         </div>
                     </div>
@@ -44,11 +44,11 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Examens</h3>
+                                        <h3 class="page-title">Sessions</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
                                         <a href="{{ route('examen/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
-                                        <a href="{{ route('examen/group') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
+                                        <a href="{{ route('examen/list') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
                                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                                         <a href="{{ route('examen/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                     </div>
@@ -70,39 +70,35 @@
                                             <th>Filière</th>
                                             <th>Course</th>
                                             <th>Type</th>
-                                            <th>Session</th>
                                             <th>Date</th>
+                                            <th>Status</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($examenList as $key=>$examen )
-                                            @foreach ($examen->courses as $course)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check check-tables">
-                                                                <input class="form-check-input" type="checkbox" value="something">
-                                                            </div>
-                                                        </td>
-                                                        <td>EXM{{ ++$key }}</td>
-                                                        <td class="id">{{ $examen->id }}</td>
-                                                        <td class="faculte">{{ $course->filiere->faculte->title }}</td>
-                                                        <td class="filiere">{{ $course->filiere->title }}</td>
-                                                        <td class="course">{{ $course->title }}</td>
-                                                        <td class="type">{{ $examen->type }}</td>
-                                                        <td class="session">{{ $examen->session ? $examen->session : '' }}</td>
-                                                        <td class="date">{{ $examen->date }}</td>
-                                                        <td class="text-end">
-                                                            <div class="actions">
-                                                                <a href="{{ url('examen/edit/'.$examen->id) }}" class="btn btn-sm bg-danger-light">
-                                                                    <i class="feather-edit"></i>
-                                                                </a>
-                                                                <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
-                                                                    <i class="feather-trash-2 me-1"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                        @foreach ($sessionList as $key=>$session)
+                                            @foreach($session->examen->courses as $course)
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" type="checkbox" value="something">
+                                                        </div>
+                                                    </td>
+                                                    <td>EXM{{ ++$key }}</td>
+                                                    <td hidden class="id">{{ $session->id }}</td>
+                                                    <td class="faculte">{{ $course->filiere->faculte->title }}</td>
+                                                    <td class="filiere">{{ $course->filiere->title }}</td>
+                                                    <td class="course">{{ $course->title }}</td>
+                                                    <td class="course {{$session->type == 'Rattrapage' ? 'text-danger' : 'text-info'}}">{{ $session->type }}</td>
+                                                    <td class="date">{{ date('d-m-Y', strtotime($session->examen->date)) }}</td>
+                                                    <td class="course text-info">{{ $session->examen->status }}</td>
+                                                    <td class="text-end">
+                                                            <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
+                                                                <i class="feather-trash-2 me-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         @endforeach
                                     </tbody>

@@ -28,20 +28,24 @@ class Student extends Model
     // ];
     protected $guarded = [];
 
-    // Relation One to Many Student and Notes 
+    /**
+     * % Get All Notes of an Student
+     */
     public function notes()
     {
         return $this->hasMany(Note::class);
     }
 
-    // Relation Many to One Student and Filiere
+    /**
+     * % Get The Filiere of an Student
+     */
     public function filiere()
     {
-        $this->belongsTo(Filiere::class);
+        return $this->belongsTo(Filiere::class);
     }
     
     /**
-     * Get the Student's User.
+     * ! Get the Student's User.
      */
     public function user()
     {

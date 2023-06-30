@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('examen_faculte', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('examen_id')->constrained();
-            $table->foreignId('faculte_id')->constrained();
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('examen_faculte');
+        Schema::dropIfExists('sessions');
     }
 };

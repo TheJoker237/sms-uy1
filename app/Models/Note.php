@@ -13,15 +13,26 @@ class Note extends Model
 
     protected $guarded = [];
 
-    // Relation Many to One Notes and Examen
+    /**
+     * % Get the Examen's Note
+     */
     public function examen()
     {
         return $this->belongsTo(Examen::class);
     }
 
-    // Relation Many to One Notes and Student
+    /**
+     * % Get the Student's Note
+     */
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    /**
+     * % Get The Course's Note 
+     */
+    public function course(){
+        return $this->belongsTo(Course::class);
     }
 }

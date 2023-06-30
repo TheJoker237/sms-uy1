@@ -56,7 +56,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the parent Userable model (student, teacher, ...).
+     * ! Get the parent Userable model (student, teacher, ...).
      */
     public function userable()
     {

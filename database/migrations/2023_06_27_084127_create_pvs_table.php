@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('teachers', function (Blueprint $table) {
+        Schema::create('pvs', function (Blueprint $table) {
             $table->id();
-            $table->integer('experience')->nullable();
-            $table->string('title')->nullable();
-            $table->string('grade')->nullable();
-            //Morphic relation between Teacher and Children Class Doyen
-            $table->integer('teacherable_id')->nullable()->unique();
-            $table->string('teacherable_type')->nullable();
+            $table->integer('effectif')->nullable();
+            $table->double('capitalisation');
+            $table->string('session');
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('academic_year_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teachers');
+        Schema::dropIfExists('pvs');
     }
 };

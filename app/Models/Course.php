@@ -16,20 +16,42 @@ class Course extends Model
     // ];
     protected $guarded = [];
 
-    // Relation Many to One between Courses and Filiere
+    /**
+     * % Get The Filiere That own the Course
+     */
     public function filiere(){
         return $this->belongsTo(Filiere::class);
     }
 
-    // Relation Many to Many between Courses and Examens
+    /**
+     * % Get Examens That Belongs to The Course 
+     */
     public function examens(){
-        return $this->belongsToMany(Examen::class);
+        return $this->belongsToMany(Examen::class)->withTimestamps();
+    }
+    
+    /**
+     * % Get The Notes of The Course
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
     }
 
-    // Relation Many to Many between Courses and Teachers
+    /**
+     * % Get Teachers of This Course
+     */
     public function teachers()
     {
         return $this->belongsToMany(Teacher::class);    
+    }
+
+    /**
+     * % Get All The PVs of an Course
+     */
+    public function pvs()
+    {
+        return $this->hasMany(pv::class);
     }
     
 }

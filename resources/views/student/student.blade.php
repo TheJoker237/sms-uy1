@@ -9,7 +9,7 @@
                         <div class="page-sub-header">
                             <h3 class="page-title">Students</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/list') }}">Student</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">All Students</li>
                             </ul>
                         </div>
@@ -71,6 +71,9 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
+                                            <th>Faculte</th>
+                                            <th>Filiere</th>
+                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Date Of Birth</th>
                                             <th>Mobile Number</th>
@@ -87,15 +90,26 @@
                                                 </div>
                                             </td>
                                             <td>STD{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $student->id }}</td>
+                                            <td class="">{{ $student->filiere->faculte->title }}</td>
+                                            <td class="">{{ $student->filiere->title }}</td>
+                                            <td hidden class="id">
+                                                <a href="{{url('pv/session/rattrapage/student/'.$student->id)}}">
+                                                    {{ $student->id }}
+                                                </a>
+                                            </td>
+                                            <td class="id">
+                                                <a href="{{url('pv/session/rattrapage/student/'.$student->id)}}">
+                                                    {{ $student->student_id }}
+                                                </a>
+                                            </td>
                                             <td hidden class="avatar">{{ $student->user->avatar }}</td>
 
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="student-details.html"class="avatar avatar-sm me-2">
+                                                    <a href="{{url('pv/session/rattrapage/student/'.$student->id)}}"class="avatar avatar-sm me-2">
                                                         <img class="avatar-img rounded-circle" src="{{Storage::url($student->user->avatar)}}" alt="User Image">
                                                     </a>
-                                                    <a href="student-details.html">{{ $student->user->first_name }} {{ $student->user->last_name }}</a>
+                                                    <a href="{{url('pv/session/rattrapage/student/'.$student->id)}}">{{ $student->user->first_name }} {{ $student->user->last_name }}</a>
                                                 </h2>
                                             </td>
                                             <td>{{ $student->user->date_of_birth }}</td>

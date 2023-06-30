@@ -88,14 +88,21 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('user/delete', 'userDelete')->name('user/delete');
 });
 
-// ------------------------ setting -------------------------------//
+/**
+ *  ? Setting Routes 
+ */
 Route::controller(Setting::class)->group(function () {
     Route::get('setting/page', 'index')->middleware('auth')->name('setting/page');
     Route::get('setting/page/academicYear', 'academicYear')->middleware('auth')->name('setting/page/academicYear');
     Route::post('setting/page/academicYear/save', 'academicYearSave')->name('setting/page/academicYear/save'); // save record academic year
-    Route::get('setting/page/academicYear/edit/{id}', 'academicYearEdit')->name('setting/page/academicYear/edit'); // edit view academic year
-    Route::post('setting/page/academicYear/update', 'academicYearUpdate')->name('setting/page/academicYear/update'); // update record academic year
+    Route::post('setting/page/academicYear/edit', 'academicYearEdit')->name('setting/page/academicYear/edit'); // edit view academic year
+    // Route::post('setting/page/academicYear/update', 'academicYearUpdate')->name('setting/page/academicYear/update'); // update record academic year
     Route::post('setting/page/academicYear/delete', 'academicYearDelete')->name('setting/page/academicYear/delete'); // delete record academic year
+    /** Doyen **/
+    Route::get('setting/doyen', 'doyen')->middleware('auth')->name('setting/doyen');
+    Route::post('setting/doyen/set', 'doyenSet')->name('setting/doyen/set');
+    Route::post('setting/doyen/unset', 'doyenUnset')->name('setting/doyen/unset');
+    Route::post('setting/doyen/change', 'doyenChange')->name('setting/doyen/change');
 });
 // ------------------------ Course -------------------------------//
 Route::controller(CourseController::class)->group(function () {
@@ -119,12 +126,74 @@ Route::controller(FiliereController::class)->group(function () {
 // ------------------------ Examen -------------------------------//
 Route::controller(ExamenController::class)->group(function () {
     Route::get('examen/list', 'examen')->middleware('auth')->name('examen/list');
-    Route::get('examen/add', 'examenAdd')->middleware('auth')->name('examen/add');
+    Route::get('examen/add/{id?}', 'examenAdd')->middleware('auth')->name('examen/add');
     Route::post('examen/save', 'examenSave')->name('examen/save'); // save record examen
     Route::get('examen/edit/{id}', 'examenEdit')->name('examen/edit'); // edit view examen
     Route::post('examen/update', 'examenUpdate')->name('examen/update'); // update record examen
-    Route::post('examen/delete', 'examenDelete')->name('examen/delete'); // delete record examen
     // Route::post('examen/edit', 'filiereEdit')->name('filiere/edit'); // edit view examen
+    
+    /**
+     * ? Exam Delete
+     */
+    Route::post('examen/delete', 'examenDelete')->name('examen/delete'); // delete record examen
+    /**
+     * ? Exam Delete Courses
+     */
+    Route::post('examen/delete-course', 'examenDeleteCourse')->name('examen/delete-course'); // delete record examen
+
+    /**
+     * ? Examen Filiere Show Controle
+     */
+    Route::get('examen/controle', 'examenControle')->name('examen/controle');
+    /**
+     * ? Examen Filiere Show Session
+     */
+    Route::get('examen/session', 'examenSession')->name('examen/session');
+    /**
+     * ? Examen Filiere Show Controle List
+     */
+    Route::get('examen/controle-list', 'examenControleList')->name('examen/controle-list');
+    /**
+     * ? Examen Filiere Show Session List
+     */
+    Route::get('examen/session-list', 'examenSessionList')->name('examen/session-list');
+
+    /**
+     * ? Show Controle Group By Faculty
+     * % Controle
+     */
+    Route::get('examen/controle/faculty','controleGroupByFaculty')->name('examen/controle/faculty');
+    /**
+     * ? Show Controle Group By Filiere
+     * % Controle
+     */
+    Route::get('examen/controle/faculty/show/{idFaculty}','controleGroupByFiliere')->name('examen/controle/faculty/show/{idFaculty}');
+    /**
+     * ? Show Controle Concerning a Filiere
+     * % Controle
+     */
+    Route::get('examen/controle/filiere/show/{idFaculty}/{idFiliere}','controleShowForFiliere')->name('examen/controle/filiere/show');
+    /**
+     * ? Show Session Group By Faculty
+     * ! Session
+     */
+    Route::get('examen/session/faculty','sessionGroupByFaculty')->name('examen/session/faculty');
+    /**
+     * ? Show Session Group By Filiere
+     * ! Session
+     */
+    Route::get('examen/session/faculty/show/{idFaculty}','sessionGroupByFiliere')->name('examen/session/faculty/show');
+    /**
+     * ? Show Session Concerning a Filiere
+     * ! Session
+     */
+    Route::get('examen/session/filiere/show/{idFaculty}/{idFiliere}','sessionShowForFiliere')->name('examen/session/filiere/show');
+
+    /**
+     * ? Manage Exam Add Form
+     */
+    Route::post('examen/manage-filiere','examenManageFiliere')->name('examen/manage-filiere');
+    Route::post('examen/manage-course','examenManageCourse')->name('examen/manage-course');
 });
 
 // ------------------------ Note -------------------------------//
@@ -136,7 +205,47 @@ Route::controller(NoteController::class)->group(function () {
     Route::post('note/update', 'noteUpdate')->name('note/update'); // update record note
     Route::post('note/delete', 'noteDelete')->name('note/delete'); // delete record note
     // Route::post('note/edit', 'filiereEdit')->name('filiere/edit'); // edit view note
+
+    /**
+     * ? Note Show Controle
+     */
+    Route::get('note/controle', 'noteControle')->name('note/controle');
+    /**
+     * ? Note Show Session
+     */
+    Route::get('note/session', 'noteSession')->name('note/session');
 });
+// ------------------------ PV -------------------------------//
+Route::controller(NoteController::class)->group(function () {
+    Route::get('pv/list', 'pvList')->middleware('auth')->name('pv/list');
+
+    /**
+     * ? PV Show Faculty
+     */
+    Route::get('pv/faculty', 'pvFaculty')->name('pv/faculty');
+    /**
+     * ? PV Show Session Normale
+     */
+    Route::get('pv/session/normale', 'pvSessionNormale')->name('pv/session/normale');
+    /**
+     * ? PV Show Session Rattrapage
+     */
+    Route::get('pv/session/rattrapage', 'pvSessionRattrapage')->name('pv/session/rattrapage');
+    /**
+     * ? PV Show Session Normale List
+     */
+    Route::get('pv/session/normale/list/{idPv}', 'pvSessionNormaleCourse')->name('pv/session/normale/list');
+    /**
+     * ? PV Show Session Rattrapage List
+     */
+    Route::get('pv/session/rattrapage/list/{idPv}', 'pvSessionRattrapageCourse')->name('pv/session/rattrapage/list');
+    /**
+     * % PV Student Show 
+     */
+    Route::get('pv/session/rattrapage/student/{idPv}', 'pvSessionRattrapageStudent')->name('pv/session/rattrapage/student');
+});
+
+
 
 // ------------------------ Requete -------------------------------//
 Route::controller(RequeteController::class)->group(function () {
@@ -176,4 +285,11 @@ Route::controller(TeacherController::class)->group(function () {
 Route::controller(DepartmentController::class)->group(function () {
     Route::get('department/add/page', 'indexDepartment')->middleware('auth')->name('department/add/page'); // page add department
     Route::get('department/edit/page', 'editDepartment')->middleware('auth')->name('department/edit/page'); // page add department
+});
+
+/**
+ * ! Test Queries View
+ */
+Route::controller(Setting::class)->group(function(){
+    Route::get('/test', 'testQueries');
 });

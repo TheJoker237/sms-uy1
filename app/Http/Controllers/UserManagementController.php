@@ -88,9 +88,9 @@ class UserManagementController extends Controller
     /** user delete */
     public function userDelete(Request $request)
     {
-        $id = $request->user_id;
         DB::beginTransaction();
         try {
+            $id = $request->user_id;
             if (Session::get('role_name') === 'Super Admin')
             {
                 if (! $request->avatar =='images/photo_defaults.jpg')
@@ -99,18 +99,19 @@ class UserManagementController extends Controller
                 }
                 //Need to destroy any polymorphic parent if exist
                 if($type = User::find($id)->userable_type){
+                    $idChildren = User::find($id)->userable_id;
                     if($type == Teacher::class){
                         //Delete Teacher
-                        Teacher::destroy($id);
+                        Teacher::destroy($idChildren);
+
                     }
-                    elseif($type == Teacher::class){
+                    elseif($type == Student::class){
                         // Delete Student
-                        Student::destroy($id);
+                        Student::destroy($idChildren);
                     }
+                    
                 }
-                else{
-                    User::destroy($id);
-                }
+                User::destroy($id);
             } else {
                 Toastr::error('User deleted fail :)','Error');
             }

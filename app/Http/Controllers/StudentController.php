@@ -174,14 +174,18 @@ class StudentController extends Controller
     {
         DB::beginTransaction();
         try {
-           
+            $id = $request->id;
             if (! $request->avatar =='images/photo_defaults.jpg')
             {
                 Storage::disk('public')->delete($request->avatar);
             }
-            Student::destroy($request->id);
+
+            $idUser = User::where('userable_id',$id)->first()->id;
+            
             //Delete the User related to this student
-            User::destroy($request->id);
+            User::destroy($idUser);
+            
+            Student::destroy($id);
             DB::commit();
             Toastr::success('Student deleted successfully :)','Success');
             return redirect()->back();

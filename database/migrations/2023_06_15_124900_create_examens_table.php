@@ -16,9 +16,14 @@ return new class extends Migration
         Schema::create('examens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('academic_Year_id')->constrained();
-            $table->string('type',2);
-            $table->string('session',12);
             $table->date('date');
+            $table->string('status');  //Pending Or Done
+            /**
+             * ! Polymorphic Relation between Examen an CC Model an SN Model 
+             */
+            $table->integer('examable_id')->nullable();
+            $table->string('examable_type')->nullable();
+
             $table->timestamps();
         });
     }

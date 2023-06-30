@@ -15,9 +15,19 @@ class AcademicYear extends Model
     protected $guarded = [];
 
 
-    // Relation One to Many between Academic Year and Examens
+    /**
+     * % Get All Examens of An Academic Year
+     */
     public function examens()
     {
         return $this->hasMany(Examen::class);
+    }
+
+    /**
+     * % Get all The PVs of an Academic Year
+     */
+    public function pvs()
+    {
+        return $this->hasMany(pv::class);
     }
 }

@@ -196,10 +196,13 @@ class TeacherController extends Controller
     {
         DB::beginTransaction();
         try {
+            $id = $request->id;
 
-            Teacher::destroy($request->id);
+            $idUser = User::where('userable_id',$id)->first()->id;
             //Delete the User related to this teacher
-            User::destroy($request->id);
+            User::destroy($idUser);
+
+            Teacher::destroy($id);
             DB::commit();
             Toastr::success('Deleted record successfully :)','Success');
             return redirect()->back();

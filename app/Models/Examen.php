@@ -17,34 +17,38 @@ class Examen extends Model
 
     protected $guarded = [];
 
-    // Relation Many to One between Examens and Academic Year
+    /**
+     * % Get Academic Year of An Examen
+     */
     public function academicYear()
     {
         return $this->belongsTo(AcademicYear::class);
     }
 
-    // Relation Many to Many between Examens and Filieres
-    public function filieres()
-    {
-        $this->belongsToMany(Filiere::class);
-    }
-
-    // Relation Many to Many between Examens and Facultes
-    public function facultes()
-    {
-        return $this->belongsToMany(Faculte::class);
-    }
-
-    // Relation Many to Many between Examens and Courses
+    /**
+     * % Get Courses that Belongs to The Examen
+     */
     public function courses()
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Course::class)->withTimestamps();
     }
 
-    // Relation One to Many between Examen and Notes
+    /**
+     * % Get All The Notes of And Examen
+     */
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    // 
+
+    /**
+     * ! Get The parent Examable Model ( Controle or Session)
+     */
+    public function examable()
+    {
+        return $this->morphTo();
     }
 
 }
